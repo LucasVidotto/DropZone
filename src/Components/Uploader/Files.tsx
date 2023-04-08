@@ -1,25 +1,29 @@
+import { AiOutlineFilePdf,AiOutlineFileSearch } from "react-icons/ai";
 
-import { AiOutlineFilePdf, AiOutlineFileSearch } from "react-icons/ai";
-type Props={
-    files : any,
-    types: any
-}
-export function Files({files,types}:Props){
-    
-    return(
-        <>
-            {files.length > 0  ? 
+interface Props {
+    uploader?: { file: File; preview: string }[];
+  }
+  
+  export function Files({uploader}:Props){
+    return (
+      <>
+        {uploader.map(({file, preview}: any) => (
             <div className="w-[27.5rem] h-[70px] flex flex-row items-center justify-center bg-[#ffff] rounded-xl border-solid border-2 border-[#bebcc0]">
-                {types == "application/pdf" ? 
-                    <AiOutlineFilePdf />
-                
-                : 
+                {file.type === "application/pdf" ? (
+                <AiOutlineFilePdf size="30px" color="red"/>
+                ) : (
+                <AiOutlineFileSearch />
+                )}
+                {file ? 
+                <div className="ml-6 flex flex-row">
+                    <span >{file.name}</span>
+                    <span className="ml-2 mr-2"> {file.size}</span>
+                    <span> {file.type}</span>
+                </div> : <span> 'inputs'</span>}
+            </div>
+        ))}
 
-                    <AiOutlineFileSearch />}
-                {files ? files : 'inputs'}
-            </div> :
-            <span className="text-[#bebcc0]">Sem Dados</span>
-            } 
-        </>
-    )
-}
+      </>
+    );
+  }
+  
